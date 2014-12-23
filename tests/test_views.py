@@ -1,4 +1,6 @@
+from app import app
 from app.views import *
 
 def test_index():
-    assert index() == 'Hello World!', 'Index value incorrect'
+    assert 'Hello' in index()
+    assert 'Allison' in index()
