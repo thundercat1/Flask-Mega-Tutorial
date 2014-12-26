@@ -9,7 +9,6 @@ Flask-WTF==0.10.3
 Flask-WhooshAlchemy==0.56
 Jinja2==2.7.3
 MarkupSafe==0.23
--e git+http://...@2893079e2d8c99e69c75645ad986dcfdf7329d16#egg=Mega_Tutorial-dev
 SQLAlchemy==0.9.8
 Tempita==0.5.3dev
 WTForms==2.0.1
