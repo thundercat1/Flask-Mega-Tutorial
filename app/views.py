@@ -27,4 +27,4 @@ def login():
                 (form.openid.data, str(form.remember_me.data)))
         return flask.redirect('/index')
 
-    return flask.render_template('login.html', title='login', form=form)
+    return flask.render_template('login.html', title='login', form=form, providers=app.config['OPENID_PROVIDERS'])
