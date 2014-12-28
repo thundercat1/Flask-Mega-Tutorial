@@ -4,10 +4,13 @@ import forms
 import flask.ext.login as flasklogin
 from models import User, Post
 
+
 @app.route('/')
 @app.route('/index')
+@flasklogin.login_required
 def index():
     user = flask.g.user
+    print flask.session
 
 
     posts = [
@@ -65,7 +68,10 @@ def after_login(resp):
     return flask.redirect(flask.request.args.get('next') or flask.url_for('index'))
 
 
-
+@app.route('/logout')
+def logout():
+    flasklogin.logout_user()
+    return flask.redirect(flask.url_for('index'))
 
 @lm.user_loader
 def load_user(id):
