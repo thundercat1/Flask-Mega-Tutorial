@@ -7,7 +7,8 @@ from models import User, Post
 @app.route('/')
 @app.route('/index')
 def index():
-    user = {'nickname': 'Allison'}
+    user = flask.g.user
+
 
     posts = [
             {
