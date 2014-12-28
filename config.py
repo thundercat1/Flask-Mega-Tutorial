@@ -1,6 +1,11 @@
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'You will never guess the key'
 
+import os
+base_path = os.path.abspath(os.path.dirname(__file__))
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(base_path, 'app.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(base_path, 'db_repository')
+
 OPENID_PROVIDERS = [
     {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
     {'name': 'Yahoo', 'url': 'https://me.yahoo.com'},
