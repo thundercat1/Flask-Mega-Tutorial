@@ -107,10 +107,20 @@ def user(nickname):
 
 @app.route('/edit_profile', methods=['GET','POST'])
 @flasklogin.login_required
-def edit_user():
+def edit_profile():
     form = forms.ProfileEditForm()
+    user = flask.g.user
     if form.validate_on_submit():
-        pass
+        user.nickname = form.nickname.data
+        user.about_me = form.about_me.data
+        db.session.add(user)
+        db.session.commit()
+        flask.flash('Profile changes have been saved')
+        return flask.redirect(flask.url_for('edit_user'))
+    
+    else:
+        form.nickname.data = user.nickname
+        form.about_me.data = user.about_me
 
     return flask.render_template('edit_profile.html', form=form)
 

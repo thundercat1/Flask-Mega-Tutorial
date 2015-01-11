@@ -9,4 +9,4 @@ class LoginForm(Form):
 
 class ProfileEditForm(Form):
     nickname = StringField('Nickname', validators=[DataRequired()])
-    about_me = TextAreaField('About Me', validators=[Length(min=0, max=120)])
+    about_me = TextAreaField('About Me', validators=[Length(min=0, max=500)])
