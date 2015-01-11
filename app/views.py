@@ -1,6 +1,7 @@
 from app import app, db, oid, lm
 import flask
 import forms
+import datetime
 import flask.ext.login as flasklogin
 from models import User, Post
 
@@ -81,3 +82,35 @@ def load_user(id):
 @app.before_request
 def before_request():
     flask.g.user = flasklogin.current_user
+    if flask.g.user.is_authenticated():
+        flask.g.user.last_seen = datetime.datetime.utcnow()
+        db.session.add(flask.g.user)
+        db.session.commit()
+
+
+@app.route('/user/<nickname>', methods=['GET'])
+@flasklogin.login_required
+def user(nickname):
+    user = User.query.filter_by(nickname=nickname).first()
+    if user == None:
+        flask.flash('User not found: %s' % nickname)
+        return flask.redirect(flask.url_for('index'))
+
+    posts = [
+            {'author': user, 'body': 'post #1'},
+            {'author': user, 'body': 'post #2'}
+            ]
+
+    flask.flash('Found ' + user.nickname)
+    return flask.render_template('user.html', user=user, posts=posts)
+
+
+@app.route('/edit_profile', methods=['GET','POST'])
+@flasklogin.login_required
+def edit_user():
+    form = forms.ProfileEditForm()
+    if form.validate_on_submit():
+        pass
+
+    return flask.render_template('edit_profile.html', form=form)
+
